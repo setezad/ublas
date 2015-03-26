@@ -33,7 +33,6 @@ void applygauselimination (T &m) {
 
 			if (m(rmax,i) == 0) {
 				std::cout<<"Error: Matrix is singular!"<<std::endl;
-				//std::cout<<i<<rmax<<std::endl;
 			}
 			// swap rows using ublas embedded functions
 			matrix_row<T> rmax_row (m, rmax);
@@ -43,6 +42,10 @@ void applygauselimination (T &m) {
 			for (int j=i+1; j<row; j++) {
 				for (int d=i+1; d<col; d++) {
 					alpha = m(j,i)/m(i,i);
+					// prefered precision
+					if (alpha <1e-5 ) {
+						alpha = 0;
+					}
 					m(j,d) -= m(i,d)*alpha;
 					
 				}
